@@ -1,0 +1,83 @@
+model:
+  channels: 32
+  num_blocks: 7
+  semantic_classes: 2  
+  instance_classes: 2  
+  sem2ins_classes: []  
+  semantic_weight: [1.0, 1.0]
+  semantic_only: False
+  ignore_label: -100
+  
+  grouping_cfg:
+    score_thr: 0.2  
+    
+    radius: 0.1    
+    mean_active: 300   
+    
+    
+    class_numpoint_mean: [500, 500] 
+
+    npoint_thr: 0.05  
+    ignore_classes: []   
+  instance_voxel_cfg:
+    scale: 20 
+    spatial_shape: 20   
+  train_cfg:
+    max_proposal_num: 200   
+    pos_iou_thr: 0.5
+  test_cfg:
+    x4_split: False
+    cls_score_thr: 0.001
+    mask_score_thr: -0.5
+    min_npoint: 100       
+    # eval_tasks: ['semantic']
+    eval_tasks: ['semantic', 'instance']
+  fixed_modules: []
+  # fixed_modules: ['input_conv', 'unet', 'output_layer', 'semantic_linear', 'offset_linear']
+
+data:
+  train:
+    type: 'shengcai'
+    data_root: 'dataset/shengcai'
+    prefix: 'train'
+    suffix: '.txt'
+    training: True
+    repeat: 4
+    voxel_cfg:
+      scale: 20 #17     
+      spatial_shape: [128, 512]
+      max_npoint: 250000
+      min_npoint: 5000
+  test:
+    type: 'shengcai'
+    data_root: 'dataset/shengcai'
+    prefix: 'val'
+    suffix: '.txt'
+    training: False
+    with_label: True
+    voxel_cfg:
+      scale: 20 
+      spatial_shape: [128, 512]
+      max_npoint: 250000
+      min_npoint: 5000
+
+dataloader:
+  train:
+    batch_size: 4
+    num_workers: 4
+  test:
+    batch_size: 1
+    num_workers: 1
+
+optimizer:
+  type: 'Adam'
+  lr: 0.001
+
+fp16: False
+
+epochs: 96   
+step_epoch: 48   
+save_freq: 4
+# pretrain: './hais_ckpt_spconv2.pth'
+pretrain: '/home/gxf/PycharmProjects/SoftGroup-main/work_dirs/softgroup_shengcai_inst_1105/epoch_60.pth' 
+work_dir: ''
