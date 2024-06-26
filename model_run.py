@@ -287,9 +287,7 @@ def main_single(file=None, out_path=None,
         for i, res in enumerate(results):
             data = np.loadtxt(file)
             xyz, color = data[:, :3], data[:, 3:6]
-            # pcd = o3d.geometry.PointCloud(points=o3d.utility.Vector3dVector(pos[idx_ignore]))
-            # xyz = np.asarray(pcd.points)
-
+        
             inst_label_pred_rgb = np.zeros(xyz.shape)
             semantic_preds = res['semantic_preds']
             pred_instances = res['pred_instances']
@@ -322,8 +320,6 @@ def main_single(file=None, out_path=None,
             if return_data:
                 raw_data.append((sem, inst))
             continue
-
-            
 
             rgb = inst_label_pred_rgb
 
