@@ -202,7 +202,7 @@ class appmain(QtWidgets.QMainWindow):
         options = QtWidgets.QFileDialog.Options()
         options |= QtWidgets.QFileDialog.ShowDirsOnly
 
-        folder_path = QtWidgets.QFileDialog.getExistingDirectory(self, "选择文件夹", options=options)
+        folder_path = QtWidgets.QFileDialog.getExistingDirectory(self, "file", options=options)
 
         if folder_path:
             lineEdit.setText(folder_path)
@@ -281,7 +281,7 @@ class appmain(QtWidgets.QMainWindow):
         if self.ui_MainWindow.checkBox_seg_lettuce.isChecked():
 
             python_env = PYTHON_ENV
-            run_file_path = '/home/gxf/Desktop/qt_test/model_run.py'
+            run_file_path = './model_run.py'
             run_cmd = [run_file_path, '--in_path', in_path, '--out_path', out_path]
             self.add_process(python_env, run_cmd, ">>> ……")
 
@@ -318,9 +318,6 @@ class appmain(QtWidgets.QMainWindow):
             run_cmd = [run_file_path, '--in_path', in_path, '--out_path', out_path]
             self.add_process(python_env, run_cmd, ">>> ……")
 
-    def connectFun_pushButton_other_run_clicked(self):
-        pass
-
     def connectFun_pushButton_visual_model_clicked(self):
         model_files = []
         if os.path.isfile(self.ui_MainWindow.lineEdit_visual_path.text()) and self.ui_MainWindow.lineEdit_visual_path.text()[-4:] in "*.txt *.obj *.ply":
@@ -354,7 +351,6 @@ class appmain(QtWidgets.QMainWindow):
             self.visual_table(datas)
 
     def closeEvent(self, a0: QtGui.QCloseEvent) -> None:
-        # print("Main Close!!!")
         if self.thread_fun is not None and self.thread_fun.is_alive():
             self.thread_fun.terminate()
         
@@ -383,7 +379,6 @@ class appmain(QtWidgets.QMainWindow):
             pro.readyReadStandardError.connect(lambda: self.update_progressBar_processOutInfo(str(pro.readAllStandardError())))
             pro.finished.connect(lambda exitCode, exitStatus: self.stop_progressBar(100))
 
-            # self.ui_MainWindow.progressBar.setMaximum(0)
             self.ui_MainWindow.progressBar.setValue(0)
             self.enable_all_widget(False)
 
