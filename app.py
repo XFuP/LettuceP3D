@@ -45,11 +45,11 @@ class SelectDialog(QtWidgets.QDialog):
 
         layout = QtWidgets.QVBoxLayout()
 
-        self.single_file_button = QtWidgets.QPushButton("单文件")
+        self.single_file_button = QtWidgets.QPushButton("file")
         self.single_file_button.clicked.connect(self.on_single_file_clicked)
         layout.addWidget(self.single_file_button)
 
-        self.folder_button = QtWidgets.QPushButton("文件夹")
+        self.folder_button = QtWidgets.QPushButton("files")
         self.folder_button.clicked.connect(self.on_folder_clicked)
         layout.addWidget(self.folder_button)
 
@@ -70,7 +70,7 @@ class appmain(QtWidgets.QMainWindow):
     def __init__(self) -> None:
         self.app = QtWidgets.QApplication(sys.argv)
         super(appmain, self).__init__()
-        # Main主窗口
+      
         self.ui_MainWindow = Ui_win_main.Ui_MainWindow()
         self.ui_MainWindow.setupUi(self)
 
@@ -146,7 +146,7 @@ class appmain(QtWidgets.QMainWindow):
         self.windows_running_dialog = None
 
     def ui_MainWindowWidget_Init(self, ui: Ui_win_main.Ui_MainWindow):
-        # pushButton_run 执行
+
         ui.pushButton_pre_run.clicked.connect(
             lambda: self.connectFun_pushButton_pre_run_clicked()
         )
@@ -188,9 +188,7 @@ class appmain(QtWidgets.QMainWindow):
         self.ui_MainWindow.textEdit_log.append('[' + str(current_time)[:-7] + '] ' + info)
 
     def enable_all_widget(self, is_enable: bool):
-        '''
-        遍历所有的UI元素
-        '''
+        
         def get_all_widget(windows):
             select_widget = []
             for w in windows.findChildren(QtWidgets.QWidget):
@@ -271,7 +269,6 @@ class appmain(QtWidgets.QMainWindow):
         #         args=(None,),
         #     )
         #     self.thread_fun.start()
-        ''' 获取路径 '''
         in_path = self.ui_MainWindow.lineEdit_main_in_path.text()
         out_path = self.ui_MainWindow.lineEdit_main_out_path.text()
 
@@ -283,16 +280,15 @@ class appmain(QtWidgets.QMainWindow):
             return
 
         if self.ui_MainWindow.checkBox_pre_allToCai.isChecked() and self.ui_MainWindow.doubleSpinBox_allToCai_density.isEnabled:
-            ''' 分单盆 '''
             allToCai_density = self.ui_MainWindow.doubleSpinBox_allToCai_density.value()
 
             python_env = PYTHON_ENV
             run_file_path = r"./pen_cluster.py"
             run_cmd = [run_file_path, '--in_path', in_path, '--out_path', out_path, '--allToCai_density', allToCai_density]
-            self.add_process(python_env, run_cmd, ">>> 分成单盆生菜")
+            self.add_process(python_env, run_cmd, ">>> ……")
 
     def connectFun_pushButton_seg_run_clicked(self):
-        ''' 获取路径 '''
+
         in_path = self.ui_MainWindow.lineEdit_main_in_path.text()
         out_path = self.ui_MainWindow.lineEdit_main_out_path.text()
 
@@ -304,21 +300,21 @@ class appmain(QtWidgets.QMainWindow):
             return
 
         if self.ui_MainWindow.checkBox_seg_lettuce.isChecked():
-            ''' 分割单株 '''
+
             python_env = PYTHON_ENV
             run_file_path = '/home/gxf/Desktop/qt_test/model_run.py'
             run_cmd = [run_file_path, '--in_path', in_path, '--out_path', out_path]
-            self.add_process(python_env, run_cmd, ">>> 分割单株")
+            self.add_process(python_env, run_cmd, ">>> ……")
 
         if self.ui_MainWindow.checkBox_seg_singleLeaf.isChecked():
-            ''' 分割单叶 '''
+
             python_env = PYTHON_ENV
             run_file_path = './cai_to_single_leaf.py'
             run_cmd = [run_file_path, '--in_path', out_path if self.ui_MainWindow.checkBox_seg_lettuce.isChecked() else in_path, '--out_path', out_path]
-            self.add_process(python_env, run_cmd, ">>> 分割单叶")
+            self.add_process(python_env, run_cmd, ">>> ……")
 
     def connectFun_pushButton_phe_run_clicked(self):
-        ''' 获取路径 '''
+
         in_path = self.ui_MainWindow.lineEdit_main_in_path.text()
         out_path = self.ui_MainWindow.lineEdit_main_out_path.text()
 
@@ -330,18 +326,18 @@ class appmain(QtWidgets.QMainWindow):
             return
         
         if self.ui_MainWindow.checkBox_phe_lettuce.isChecked():
-            ''' 株型 '''
+
             python_env = PYTHON_ENV
             run_file_path = r".\function_phe\_QT_API_param_to_file.py"
             run_cmd = [run_file_path, '--in_path', in_path, '--out_path', out_path]
-            self.add_process(python_env, run_cmd, ">>> 株型计算")
+            self.add_process(python_env, run_cmd, ">>> ……")
 
         if self.ui_MainWindow.checkBox_phe_leaves.isChecked():
-            ''' 叶型 '''
+
             python_env = PYTHON_ENV
             run_file_path = r".\function_phe\_QT_API_param_to_file_leaf.py"
             run_cmd = [run_file_path, '--in_path', in_path, '--out_path', out_path]
-            self.add_process(python_env, run_cmd, ">>> 叶型计算")
+            self.add_process(python_env, run_cmd, ">>> ……")
 
     def connectFun_pushButton_other_run_clicked(self):
         pass
@@ -419,7 +415,7 @@ class appmain(QtWidgets.QMainWindow):
             self.enable_all_widget(False)
 
         if self.process_finish and len(self.process_array) != 0:
-            self.ui_MainWindow.toolBox.setCurrentIndex(1)       # 自动跳转到【运行输出】
+            self.ui_MainWindow.toolBox.setCurrentIndex(1)      
             pro = self.process_array[0]
             self.process_array = self.process_array[1:]
 
@@ -524,13 +520,13 @@ class appmain(QtWidgets.QMainWindow):
         app.run()
 
     def visual_model(self, model_files: list):
-        if False:       # 使用外部窗口
+        if False:      
             processOpen3d = multiprocessing.Process(
                 target=appmain.open3d_visual,
                 args=(model_files, )
             )
             processOpen3d.start()
-        else:           # 使用内部窗口
+        else:        
             new_uuid = []
             for file in model_files:
                 objname = os.path.splitext(os.path.basename(file))[0]
