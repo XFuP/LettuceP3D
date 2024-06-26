@@ -282,7 +282,6 @@ def main_single(file=None, out_path=None,
             progress_bar.update()
         progress_bar.close()
 
-        ''' 结果解析保存 '''
         results = collect_results_gpu(results, len(dataset))
         raw_data = []
         for i, res in enumerate(results):
