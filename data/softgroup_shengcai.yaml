@@ -30,10 +30,9 @@ model:
     cls_score_thr: 0.001
     mask_score_thr: -0.5
     min_npoint: 100       
-    # eval_tasks: ['semantic']
     eval_tasks: ['semantic', 'instance']
   fixed_modules: []
-  # fixed_modules: ['input_conv', 'unet', 'output_layer', 'semantic_linear', 'offset_linear']
+
 
 data:
   train:
@@ -78,6 +77,5 @@ fp16: False
 epochs: 96   
 step_epoch: 48   
 save_freq: 4
-# pretrain: './hais_ckpt_spconv2.pth'
 pretrain: '/home/gxf/PycharmProjects/SoftGroup-main/work_dirs/softgroup_shengcai_inst_1105/epoch_60.pth' 
 work_dir: ''
