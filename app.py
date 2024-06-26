@@ -4,14 +4,9 @@ import csv
 import glob
 import datetime
 import multiprocessing
-
 import numpy as np
-
-
 import Ui_untitled_ENG as Ui_win_main  
-
 from PyQt5 import QtCore, QtGui, QtWidgets
-
 import open3d as o3d
 import time
 from open3d.visualization import gui
@@ -22,9 +17,7 @@ import win32gui
 import uuid
 from util.showByOpen3D import showbyopen3d
 
-
 PYTHON_ENV = r"D:\Anaconda\envs\pre\python.exe"     
-
 
 class QSSLoader:
     def __init__(self) -> None:
@@ -180,9 +173,6 @@ class appmain(QtWidgets.QMainWindow):
             lambda: self.open_file_or_folder_dialog(ui.lineEdit_visual_path)
         )
 
-###############################################################################################
-# ui_MainWindow Widget Function
-###############################################################################################
     def log_print(self, info):
         current_time = datetime.datetime.now()
         self.ui_MainWindow.textEdit_log.append('[' + str(current_time)[:-7] + '] ' + info)
@@ -256,19 +246,8 @@ class appmain(QtWidgets.QMainWindow):
         else:
             self.log_print(out_info)
 
-###############################################################################################
-# ui_MainWindow Connect Function
-###############################################################################################
     def connectFun_pushButton_pre_run_clicked(self):
-        # self.log_print("gzsdgzdffffffffffffffffffffffffffffffffffffffffgzftgaweft")
-        # self.enable_all_widget(True)
-
-        # if not self.thread_fun or not self.thread_fun.is_alive():
-        #     self.thread_fun = threading.Thread(
-        #         target=self.gxf_main,
-        #         args=(None,),
-        #     )
-        #     self.thread_fun.start()
+      
         in_path = self.ui_MainWindow.lineEdit_main_in_path.text()
         out_path = self.ui_MainWindow.lineEdit_main_out_path.text()
 
@@ -374,9 +353,6 @@ class appmain(QtWidgets.QMainWindow):
 
             self.visual_table(datas)
 
-###############################################################################################
-# ui_MainWindow Other Function
-###############################################################################################
     def closeEvent(self, a0: QtGui.QCloseEvent) -> None:
         # print("Main Close!!!")
         if self.thread_fun is not None and self.thread_fun.is_alive():
@@ -394,9 +370,6 @@ class appmain(QtWidgets.QMainWindow):
 
         return super().closeEvent(a0)
 
-###############################################################################################
-# gxf Function
-###############################################################################################
     def time_fun(self):
         def run_process(python_env, args):
             pro = QtCore.QProcess()
@@ -426,9 +399,6 @@ class appmain(QtWidgets.QMainWindow):
     def add_process(self, python_env, args: list, info: str):
         self.process_array.append([python_env, args, info])
 
-###############################################################################################
-# visual Function
-###############################################################################################
     def windows_running(self):
         dialog = QtWidgets.QDialog(self)
         dialog.setWindowFlag(QtCore.Qt.WindowCloseButtonHint, False)
@@ -542,9 +512,6 @@ class appmain(QtWidgets.QMainWindow):
             if new_uuid:
                 self.send([vType.geometry.add, new_uuid])
 
-###############################################################################
-# open3d Connect Function
-###############################################################################
     def connectFun_threadCommunicate_singal(self, info: list):
         vt = info[0]
         pass
